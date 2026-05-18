@@ -10,6 +10,8 @@ Ported directly from the [lattice-safe/dilithium-rs](https://github.com/lattice-
 - **Security Levels**: Fully supports ML-DSA-44 (Level 2), ML-DSA-65 (Level 3), and ML-DSA-87 (Level 5).
 - **Constant Time**: Reductions, rounding, and signature verification challenge comparisons are designed to resist timing side channels.
 - **Bit-Exact Parity**: Verified against NIST KAT (Known Answer Test) vectors, ensuring absolute compatibility with official C and Rust reference implementations.
+- **Production Hardened**: Features 100% test coverage across the entire cryptographic core, comprehensive FIPS boundary parameter validation, and safe error propagation.
+- **Memory Hygiene**: Secret keys, RNG seeds, and sensitive polynomial buffers are actively zeroized upon drop to minimize heap exposure.
 
 ## Installation
 

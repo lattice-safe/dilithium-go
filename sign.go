@@ -219,7 +219,10 @@ func SignSignature(mode Mode, sig []byte, m []byte, ctx []byte, rnd *[RNDBYTES]b
 	pre[1] = byte(len(ctx))
 	copy(pre[2:], ctx)
 
-	SignSignatureInternal(mode, sig, m, pre, rnd, sk)
+	ret := SignSignatureInternal(mode, sig, m, pre, rnd, sk)
+	if ret < 0 {
+		return int32(ret)
+	}
 	return 0
 }
 
@@ -336,7 +339,10 @@ func SignHash(mode Mode, sig []byte, msg []byte, ctx []byte, rnd *[RNDBYTES]byte
 	off += len(oid)
 	copy(pre[off:off+len(phM)], phM)
 
-	SignSignatureInternal(mode, sig, []byte{}, pre, rnd, sk)
+	ret := SignSignatureInternal(mode, sig, []byte{}, pre, rnd, sk)
+	if ret < 0 {
+		return int32(ret)
+	}
 	return 0
 }
 
