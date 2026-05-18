@@ -102,7 +102,9 @@ func SignSignatureInternal(mode Mode, sig []byte, m []byte, pre []byte, rnd *[RN
 	t0 := NewPolyVecK()
 	s1 := NewPolyVecL()
 	s2 := NewPolyVecK()
-	UnpackSk(mode, &rho, tr[:], &key, t0, s1, s2, sk)
+	if err := UnpackSk(mode, &rho, tr[:], &key, t0, s1, s2, sk); err != nil {
+		return -1
+	}
 
 	// Compute mu = CRH(tr, pre, msg)
 	var mu [CRHBYTES]byte
@@ -235,7 +237,9 @@ func VerifyInternal(mode Mode, sig []byte, m []byte, pre []byte, pk []byte) bool
 	// Unpack public key
 	var rho [SEEDBYTES]byte
 	t1 := NewPolyVecK()
-	UnpackPk(mode, &rho, t1, pk)
+	if err := UnpackPk(mode, &rho, t1, pk); err != nil {
+		return false
+	}
 
 	// Unpack signature
 	c := make([]byte, ctildeLen)

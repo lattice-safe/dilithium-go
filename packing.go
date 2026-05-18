@@ -1,5 +1,7 @@
 package dilithium
 
+import "errors"
+
 // PackPk packs public key: pk = (rho, t1).
 func PackPk(mode Mode, pk []byte, rho *[SEEDBYTES]byte, t1 *PolyVecK) {
 	copy(pk[:SEEDBYTES], rho[:])
@@ -11,13 +13,17 @@ func PackPk(mode Mode, pk []byte, rho *[SEEDBYTES]byte, t1 *PolyVecK) {
 }
 
 // UnpackPk unpacks public key: pk = (rho, t1).
-func UnpackPk(mode Mode, rho *[SEEDBYTES]byte, t1 *PolyVecK, pk []byte) {
+func UnpackPk(mode Mode, rho *[SEEDBYTES]byte, t1 *PolyVecK, pk []byte) error {
+	if len(pk) != mode.PublicKeyBytes() {
+		return errors.New("invalid public key length")
+	}
 	copy(rho[:], pk[:SEEDBYTES])
 	offset := SEEDBYTES
 	for i := 0; i < mode.K(); i++ {
 		PolyT1Unpack(&t1.Vec[i], pk[offset:offset+POLYT1_PACKEDBYTES])
 		offset += POLYT1_PACKEDBYTES
 	}
+	return nil
 }
 
 // PackSk packs secret key: sk = (rho, key, tr, s1, s2, t0).
@@ -57,7 +63,10 @@ func PackSk(mode Mode, sk []byte, rho *[SEEDBYTES]byte, tr []byte, key *[SEEDBYT
 }
 
 // UnpackSk unpacks secret key: sk = (rho, key, tr, s1, s2, t0).
-func UnpackSk(mode Mode, rho *[SEEDBYTES]byte, tr []byte, key *[SEEDBYTES]byte, t0 *PolyVecK, s1 *PolyVecL, s2 *PolyVecK, sk []byte) {
+func UnpackSk(mode Mode, rho *[SEEDBYTES]byte, tr []byte, key *[SEEDBYTES]byte, t0 *PolyVecK, s1 *PolyVecL, s2 *PolyVecK, sk []byte) error {
+	if len(sk) != mode.SecretKeyBytes() {
+		return errors.New("invalid secret key length")
+	}
 	etaPacked := mode.PolyEtaPackedBytes()
 	offset := 0
 
@@ -90,6 +99,7 @@ func UnpackSk(mode Mode, rho *[SEEDBYTES]byte, tr []byte, key *[SEEDBYTES]byte, 
 		PolyT0Unpack(&t0.Vec[i], sk[offset:offset+POLYT0_PACKEDBYTES])
 		offset += POLYT0_PACKEDBYTES
 	}
+	return nil
 }
 
 // PackSig packs signature: sig = (c̃, z, h).
@@ -130,6 +140,9 @@ func PackSig(mode Mode, sig []byte, c []byte, z *PolyVecL, h *PolyVecK) {
 // UnpackSig unpacks signature: sig = (c̃, z, h).
 // Returns true on malformed signature.
 func UnpackSig(mode Mode, c []byte, z *PolyVecL, h *PolyVecK, sig []byte) bool {
+	if len(sig) != mode.SignatureBytes() {
+		return true
+	}
 	ctilde := mode.Ctildebytes()
 	polyzPacked := mode.PolyZPackedBytes()
 	omega := mode.Omega()
