@@ -31,7 +31,7 @@ func decompose(mode Mode, a int32) (int32, int32) {
 	}
 
 	a0 := a - a1*2*gamma2
-	a0 -= (((Q - 1) / 2 - a0) >> 31) & Q
+	a0 -= (((Q-1)/2 - a0) >> 31) & Q
 	return a1, a0
 }
 

@@ -29,7 +29,7 @@ func FuzzUnpackSk(f *testing.F) {
 	if err != nil {
 		f.Fatal(err)
 	}
-	
+
 	// Just use a dummy valid slice length
 	validLen := mode.SecretKeyBytes()
 	dummySk := make([]byte, validLen)

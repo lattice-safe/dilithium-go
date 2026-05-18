@@ -19,7 +19,7 @@ func Keypair(mode Mode, randomSeed *[SEEDBYTES]byte) ([]byte, []byte) {
 	seedbuf[SEEDBYTES] = byte(k)
 	seedbuf[SEEDBYTES+1] = byte(l)
 	Shake256(expanded[:], seedbuf[:SEEDBYTES+2])
-	
+
 	// S1: zeroize keying material (Go doesn't have reliable zeroize, but we can overwrite)
 	for i := range seedbuf {
 		seedbuf[i] = 0
@@ -31,7 +31,7 @@ func Keypair(mode Mode, randomSeed *[SEEDBYTES]byte) ([]byte, []byte) {
 	copy(rhoprime[:], expanded[SEEDBYTES:SEEDBYTES+CRHBYTES])
 	var key [SEEDBYTES]byte
 	copy(key[:], expanded[SEEDBYTES+CRHBYTES:])
-	
+
 	for i := range expanded {
 		expanded[i] = 0
 	}
@@ -48,7 +48,7 @@ func Keypair(mode Mode, randomSeed *[SEEDBYTES]byte) ([]byte, []byte) {
 	s2 := NewPolyVecK()
 	PolyVecLUniformEta(mode, s1, &rhoprime, 0)
 	PolyVecKUniformEta(mode, s2, &rhoprime, uint16(l))
-	
+
 	for i := range rhoprime {
 		rhoprime[i] = 0
 	}
@@ -111,7 +111,7 @@ func SignSignatureInternal(mode Mode, sig []byte, m []byte, pre []byte, rnd *[RN
 	// Compute rhoprime = CRH(key, rnd, mu)
 	var rhoprime [CRHBYTES]byte
 	Shake256Multi(rhoprime[:], [][]byte{key[:], rnd[:], mu[:]})
-	
+
 	for i := range key {
 		key[i] = 0
 	}
@@ -155,7 +155,7 @@ func SignSignatureInternal(mode Mode, sig []byte, m []byte, pre []byte, rnd *[RN
 		ctilde := mode.Ctildebytes()
 		ctildeBuf := make([]byte, ctilde)
 		Shake256Multi(ctildeBuf, [][]byte{mu[:], w1Packed})
-		
+
 		copy(sig[:ctilde], ctildeBuf)
 
 		cp := NewPoly()

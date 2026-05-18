@@ -9,7 +9,7 @@ var hasAVX2 = cpu.X86.HasAVX2
 func NTT(a *[256]int32) {
 	if hasAVX2 {
 		nttAVX2_8(a, &zetas)
-		
+
 		// Hybrid approach: Finish len=4, 2, 1 in scalar Go
 		k := 31 // 1 + 2 + 4 + 8 + 16 = 31 zetas used
 		len := 4

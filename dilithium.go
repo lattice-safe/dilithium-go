@@ -41,7 +41,7 @@ func Generate(mode Mode) (*DilithiumKeyPair, error) {
 	}
 
 	kp := GenerateDeterministic(mode, &seed)
-	
+
 	// Zeroize seed
 	for i := range seed {
 		seed[i] = 0
@@ -257,7 +257,7 @@ func FromPublicKey(data []byte) (Mode, []byte, error) {
 	if len(data) != 1+mode.PublicKeyBytes() {
 		return 0, nil, ErrFormatError
 	}
-	
+
 	pkCopy := make([]byte, len(data)-1)
 	copy(pkCopy, data[1:])
 

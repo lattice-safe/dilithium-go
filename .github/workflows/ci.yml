@@ -26,6 +26,7 @@ jobs:
       run: go mod tidy && git diff --exit-code
 
     - name: Format
+      if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest'
       run: if [ "$(gofmt -s -l . | wc -l)" -gt 0 ]; then exit 1; fi
 
     - name: Build

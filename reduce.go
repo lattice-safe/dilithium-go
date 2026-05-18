@@ -21,5 +21,3 @@ func reduce32(a int32) int32 {
 func caddq(a int32) int32 {
 	return a + ((a >> 31) & Q)
 }
-
-

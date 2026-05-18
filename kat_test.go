@@ -55,7 +55,7 @@ func runKatFull(t *testing.T, mode Mode, expectedPk, expectedSk, expectedSig str
 
 	var seed [SEEDBYTES]byte
 	rng.Fill(seed[:])
-	
+
 	pk, sk := Keypair(mode, &seed)
 
 	var pkHash [32]byte

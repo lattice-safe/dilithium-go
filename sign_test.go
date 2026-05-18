@@ -79,7 +79,7 @@ func TestBadSignature(t *testing.T) {
 	corrupted := make([]byte, len(sig.AsBytes()))
 	copy(corrupted, sig.AsBytes())
 	corrupted[0] ^= 0x01
-	
+
 	valid := VerifySignature(kp.PublicKey(), SignatureFromSlice(corrupted), msg, []byte{}, mode)
 	if valid {
 		t.Fatal("Corrupted signature was verified as valid")
