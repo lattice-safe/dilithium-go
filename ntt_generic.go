@@ -2,12 +2,7 @@
 
 package dilithium
 
-// nttAVX2 is a fallback stub for non-amd64 architectures.
-func nttAVX2(a *[256]int32) {
-	nttScalar(a)
-}
-
-// invnttAVX2 is a fallback stub for non-amd64 architectures.
-func invnttAVX2(a *[256]int32) {
-	invNTTScalar(a)
+// nttAVX2_8 is a fallback stub for non-amd64 architectures.
+func nttAVX2_8(a *[256]int32, zetas *[256]int32) {
+	// Not used since dispatch handles this
 }

@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0] - 2026-05-18
+
+### Added
+- **AVX2 SIMD Acceleration**: Fully integrated the `avo` code generator (`gen/ntt_avx2.go`) for Montgomery reductions.
+- **Hybrid NTT Approach**: Forward `NTT` now uses an optimized flat loop of AVX2 butterflies for `len >= 8`, falling back seamlessly to scalar code for tighter loops, yielding significant performance gains on modern x86 hardware.
+
 ## [0.1.0] - 2026-05-18
 
 ### Added
