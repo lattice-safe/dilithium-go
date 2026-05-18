@@ -16,7 +16,7 @@ func main() {
 	build.ConstData("QINV", operand.U32(58728449))
 	
 	// Create vectors of Q and QINV
-	qVec := build.GLOBL("qVec", build.RODATA|build.NOPTR)
+	build.GLOBL("qVec", build.RODATA|build.NOPTR)
 	build.DATA(0, operand.U32(8380417))
 	build.DATA(4, operand.U32(8380417))
 	build.DATA(8, operand.U32(8380417))
@@ -26,7 +26,7 @@ func main() {
 	build.DATA(24, operand.U32(8380417))
 	build.DATA(28, operand.U32(8380417))
 
-	qinvVec := build.GLOBL("qinvVec", build.RODATA|build.NOPTR)
+	build.GLOBL("qinvVec", build.RODATA|build.NOPTR)
 	build.DATA(0, operand.U32(58728449))
 	build.DATA(4, operand.U32(58728449))
 	build.DATA(8, operand.U32(58728449))
@@ -36,7 +36,7 @@ func main() {
 	build.DATA(24, operand.U32(58728449))
 	build.DATA(28, operand.U32(58728449))
 
-	maskVec := build.GLOBL("maskVec", build.RODATA|build.NOPTR)
+	build.GLOBL("maskVec", build.RODATA|build.NOPTR)
 	build.DATA(0, operand.U64(0xFFFFFFFF00000000))
 	build.DATA(8, operand.U64(0xFFFFFFFF00000000))
 	build.DATA(16, operand.U64(0xFFFFFFFF00000000))

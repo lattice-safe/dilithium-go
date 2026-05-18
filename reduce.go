@@ -22,7 +22,4 @@ func caddq(a int32) int32 {
 	return a + ((a >> 31) & Q)
 }
 
-// Freeze performs full canonical reduction: standard representative r = a mod^+ Q.
-func freeze(a int32) int32 {
-	return caddq(reduce32(a))
-}
+
