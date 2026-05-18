@@ -31,10 +31,10 @@ var zetas = [N]int32{
 	-1362209, 3937738, 1400424, -846154, 1976782,
 }
 
-// ntt performs Forward NTT, in-place.
+// nttScalar computes the forward Number Theoretic Transform in-place.
 // No modular reduction is performed after additions or subtractions.
 // Output vector is in bit-reversed order.
-func ntt(a *[N]int32) {
+func nttScalar(a *[256]int32) {
 	k := 0
 	len := 128
 	for len > 0 {
@@ -57,7 +57,7 @@ func ntt(a *[N]int32) {
 // In-place. No modular reductions after additions or subtractions.
 // Input coefficients need to be smaller than Q in absolute value.
 // Output coefficients are smaller than Q in absolute value.
-func invnttToMont(a *[N]int32) {
+func invNTTScalar(a *[256]int32) {
 	f := int32(41978) // mont^2/256
 	k := 256
 	len := 1

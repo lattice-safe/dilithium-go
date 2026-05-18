@@ -53,12 +53,12 @@ func (p *Poly) Shiftl() {
 
 // NTT performs in-place forward NTT.
 func (p *Poly) NTT() {
-	ntt(&p.Coeffs)
+	NTT(&p.Coeffs)
 }
 
 // InvNTTToMont performs in-place inverse NTT with Montgomery factor.
 func (p *Poly) InvNTTToMont() {
-	invnttToMont(&p.Coeffs)
+	InvNTT(&p.Coeffs)
 }
 
 // PolyPointwiseMontgomery performs pointwise multiplication in NTT domain with Montgomery reduction.
